@@ -1,0 +1,2 @@
+funString = require('../src')
+
