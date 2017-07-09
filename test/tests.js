@@ -7,7 +7,18 @@
   var funTest = require('fun-test')
   var arrange = require('fun-arrange')
 
+  function upper (string) {
+    return string.toUpperCase()
+  }
+
   var equalityTests = [
+    [[1, upper, 'hello'], 'hEllo', 'update'],
+    [[1, 'x', 'hello'], 'hxllo', 'set'],
+    [[1, 'hello'], 'e', 'get'],
+    [[['HeLlo', 'ThEre', 'woRld!']], 'HelloThereWorld!', 'pascalCase'],
+    [[['HeLlo', 'ThEre', 'woRld!']], 'helloThereWorld!', 'camelCase'],
+    [['HelloWorld!'], 'HELLOWORLD!', 'upperCase'],
+    [['HelloWorld!'], 'helloworld!', 'lowerCase'],
     [[], '', 'empty'],
     [['_', 5, 'abcdef'], 'abcdef', 'rightPad'],
     [['_', 5, 'abc'], 'abc__', 'rightPad'],
