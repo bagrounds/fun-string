@@ -31,7 +31,100 @@
     camelCase: camelCase,
     pascalCase: pascalCase,
     upperCase: upperCase,
-    lowerCase: lowerCase
+    lowerCase: lowerCase,
+    splitPrefix: fn.curry(splitPrefix),
+    tokenize: fn.curry(tokenize),
+    match: fn.curry(match),
+    matchOr: fn.curry(matchOr),
+    matchAny: fn.curry(matchAny)
+  }
+
+  /**
+   *
+   * @function module:fun-string.tokenize
+   *
+   * @param {Array<RegExp>} regexes - to match tokens
+   * @param {String} subject - to split prefix on
+   *
+   * @return {Array<String>} tokens
+   */
+  function tokenize (regexes, subject) {
+    var matchToken = fn.curry(matchAny)(
+      regexes.map(function (r) {
+        return RegExp('^' + r.source)
+      })
+    )
+
+    var m = matchToken(subject)
+    var result = []
+    while (m) {
+      result.push(m)
+      subject = subject.slice(m.length)
+      m = matchToken(subject)
+    }
+
+    return result
+  }
+
+  /**
+   *
+   * @function module:fun-string.matchAny
+   *
+   * @param {RegExp} regexes - regexes to match
+   * @param {String} subject - to match from
+   *
+   * @return {String} first that matched regex | ''
+   */
+  function matchAny (regexes, subject) {
+    return regexes.reduce(function (result, regex) {
+      return result || match(regex, subject)
+    }, '')
+  }
+
+  /**
+   *
+   * @function module:fun-string.matchOr
+   *
+   * @param {RegExp} regex1 - a regex to match
+   * @param {RegExp} regex2 - a regex to match
+   * @param {String} subject - to match from
+   *
+   * @return {String} first that matched regex | ''
+   */
+  function matchOr (regex1, regex2, subject) {
+    return match(regex1, subject) || match(regex2, subject)
+  }
+
+  /**
+   *
+   * @function module:fun-string.match
+   *
+   * @param {RegExp} regex - match to match
+   * @param {String} subject - to match from
+   *
+   * @return {String} first that matched regex | ''
+   */
+  function match (regex, subject) {
+    var result = subject.match(regex)
+
+    return result ? result[0] : ''
+  }
+
+  /**
+   *
+   * @function module:fun-string.splitPrefix
+   *
+   * @param {RegExp} regex - prefix to match
+   * @param {String} subject - to split prefix on
+   *
+   * @return {Array<String>} [prefix, suffix]
+   */
+  function splitPrefix (regex, subject) {
+    var match = subject.match(RegExp('^' + regex.source))
+
+    return match
+      ? [match[0], subject.slice(match[0].length)]
+      : ['', subject]
   }
 
   /**
