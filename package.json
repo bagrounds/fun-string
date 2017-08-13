@@ -34,21 +34,21 @@
   "devDependencies": {
     "browserify": "14.4.0",
     "docdash": "^0.4.0",
-    "eslint": "4.1.1",
+    "eslint": "4.4.1",
     "fun-arrange": "0.1.4",
-    "fun-object": "0.6.3",
     "fun-test": "^0.24.1",
     "fun-test-runner": "^0.9.1",
-    "jsdoc": "^3.4.3",
-    "madge": "^1.6.0",
-    "next-update": "3.5.2",
-    "tap": "10.7.0",
-    "uglify-js": "3.0.24"
+    "jsdoc": "3.5.4",
+    "madge": "2.0.0",
+    "next-update": "3.5.3",
+    "tap": "10.7.2",
+    "uglify-js": "3.0.27"
   },
   "dependencies": {
-    "fun-array": "0.8.1",
-    "fun-function": "0.9.1",
     "fun-predicate": "0.16.0",
-    "guarded": "0.7.3"
+    "fun-function": "0.9.1",
+    "fun-array": "0.8.1",
+    "guarded": "0.7.3",
+    "fun-object": "0.6.3"
   }
 }

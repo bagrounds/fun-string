@@ -10,6 +10,7 @@
   var fn = require('fun-function')
   var array = require('fun-array')
   var guarded = require('guarded')
+  var object = require('fun-object')
 
   var isString = predicate.type('String')
 
@@ -36,7 +37,31 @@
     tokenize: fn.curry(tokenize),
     match: fn.curry(match),
     matchOr: fn.curry(matchOr),
-    matchAny: fn.curry(matchAny)
+    matchAny: fn.curry(matchAny),
+    lex: fn.curry(lex)
+  }
+
+  /**
+   *
+   * @function module:fun-string.lex
+   *
+   * @param {Object} regexes - to match tokens
+   * @param {String} subject - to lex
+   *
+   * @return {Array<String>} tokens
+   */
+  function lex (regexes, subject) {
+    var matchers = Object.keys(regexes)
+
+    return tokenize(object.values(regexes), subject)
+      .map(function (token) {
+        return [
+          token,
+          matchers.filter(function (matcher) {
+            return regexes[matcher].test(token)
+          })[0]
+        ]
+      })
   }
 
   /**
